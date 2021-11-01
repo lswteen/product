@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    driverClassName: org.h2.Driver
+    jdbcUrl: jdbc:h2:~/test
+    username: sa
+    password:
+    maximumPoolSize: 30
+    minimumIdle: 5
+    poolName: legacy-dormancy
+    readOnly: false
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: fase
+        use_sql_comments: true
+        format_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      path: /h2
+      enabled: true

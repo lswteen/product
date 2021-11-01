@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    driverClassName: org.h2.Driver
+    jdbcUrl: jdbc:h2:file:~/h2db/test;MODE=MySql
+    username: sa
+    password:
+    maximumPoolSize: 30
+    minimumIdle: 5
+    poolName: dbrenzo
+    readOnly: false
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        show_sql: fase
+        use_sql_comments: true
+        format_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      path: /h2console
+      enabled: true

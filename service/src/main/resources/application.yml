@@ -1,0 +1,20 @@
+spring:
+  profiles:
+    active: local
+  application:
+    name: product-api
+    description: "Product Service api"
+  jackson:
+    time-zone: "Asia/Seoul"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, refresh
+      base-path: /actuator
+      path-mapping:
+        health: health
+
+server:
+  port: 9030

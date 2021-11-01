@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="5 minutes" debug="false">
+    <!-- 패턴 분석을 용이하게 하기 위해 * 로 시작 -->
+    <property name="console.format"
+              value="* %-20(%cyan(%date{HH:mm:ss.SSS}) [%thread]) %highlight(%-5level) %magenta(%marker|%logger{36}): %msg%n%caller{2, DISPLAY_CALLER_EVAL}%rEx" />
+    <property name="file.format" value="* %-30(%date [%thread]) %-5level %marker|%logger{36}: %msg%n" />
+    <property name="log.basedir" value="${log.dir:-${LOG_DIR:-${user.home}/logs}}}" />
+    <springProperty scope="context" name="ACTIVE_PROFILE" source="spring.profiles.active"/>
+
+    <!-- console -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${console.format}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- async file -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.basedir}/app.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log.basedir}/app.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>60</maxHistory>
+            <maxFileSize>1024MB</maxFileSize>
+            <totalSizeCap>7GB</totalSizeCap>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>${file.format}%ex{0}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ASYNC" class="ch.qos.logback.classic.AsyncAppender" discardingThreshold="0">
+        <appender-ref ref="FILE" />
+    </appender>
+
+    <!-- async exception file -->
+    <appender name="FILE-ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <file>${log.basedir}/exception.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log.basedir}/exception.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>60</maxHistory>
+            <maxFileSize>1024MB</maxFileSize>
+            <totalSizeCap>7GB</totalSizeCap>
+        </rollingPolicy>
+        <append>true</append>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>${file.format}%ex</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ASYNC-ERROR" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="FILE-ERROR" />
+    </appender>
+
+    <springProfile name="local,docker,test">
+        <logger name="kr.co.renzo" level="DEBUG" />
+
+        <logger name="org.hibernate.SQL" level="DEBUG" />
+        <logger name="org.hibernate.tool.hbm2ddl" level="DEBUG"/>
+        <logger name="org.hibernate.type" level="TRACE" />
+        <logger name="org.hibernate.stat" level="DEBUG" />
+        <logger name="org.hibernate.type.BasicTypeRegistry" level="WARN" />
+        <logger name="com.zaxxer.hikari.HikariConfig" level="DEBUG" />
+        <logger name="com.zaxxer.hikari" level="TRACE" />
+
+        <logger name="org.springframework.security" level="DEBUG"/>
+        <logger name="org.springframework.cloud.gateway" level="TRACE" />
+        <logger name="org.springframework.http.server.reactive" level="DEBUG"/>
+        <logger name="org.springframework.web.reactive" level="DEBUG" />
+        <logger name="org.springframework.boot.autoconfigure.web" level="DEBUG" />
+        <logger name="reactor.netty" level="TRACE" />
+
+        <root level="INFO">
+            <appender-ref ref="STDOUT" />
+        </root>
+    </springProfile>
+
+    <springProfile name="dev,qa,stage">
+        <!-- 에러와 debug 로그 분리 출력 -->
+        <logger name="kr.co.renzo" level="DEBUG" additivity="false">
+            <appender-ref ref="ASYNC" />
+        </logger>
+        <root level="ERROR">
+            <appender-ref ref="ASYNC-ERROR" />
+        </root>
+    </springProfile>
+
+    <springProfile name="release">
+        <!-- 에러와 debug 로그 분리 출력 -->
+        <root level="ERROR">
+            <appender-ref ref="ASYNC-ERROR" />
+        </root>
+    </springProfile>
+</configuration>

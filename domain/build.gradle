@@ -1,0 +1,76 @@
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+        dependencies {
+            classpath "gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:${querydslPluginVersion}"
+            classpath('net.ltgt.gradle:gradle-apt-plugin:0.19')
+        }
+    }
+}
+
+apply plugin: 'idea'
+apply plugin: 'net.ltgt.apt'
+apply plugin: 'net.ltgt.apt-idea'
+
+bootJar { enabled = false }
+jar { enabled = true }
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.data:spring-data-envers'
+    implementation 'org.springframework.boot:spring-boot-configuration-processor'
+
+    compile("com.querydsl:querydsl-apt:${queryDSLVersion}")
+    compile("com.querydsl:querydsl-sql:${queryDSLVersion}")
+    compile("com.querydsl:querydsl-sql-spring:${queryDSLVersion}")
+    compile("com.querydsl:querydsl-jpa:${queryDSLVersion}")
+
+    runtimeOnly 'mysql:mysql-connector-java'
+    implementation('com.h2database:h2:1.4.196')
+
+    compile project(':core')
+}
+
+def queryDslDir = "src/main/generated"
+def queryDslOutput = file("${queryDslDir}")
+sourceSets {
+    main {
+        java {
+            srcDir queryDslDir
+        }
+    }
+}
+
+dependencies {
+    compile "com.querydsl:querydsl-jpa:${queryDSLVersion}"
+    annotationProcessor(
+            "com.querydsl:querydsl-apt:${queryDSLVersion}:jpa"
+            , "javax.annotation:javax.annotation-api:1.3.2"
+            , "org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.2.Final"
+    )
+}
+
+compileJava.doFirst {
+    delete file("${queryDslDir}")
+    ant.echo(message: "compileJava... we successully deleted files")
+}
+
+def gradleGeneratedDir = "./build/generated/source/apt"
+def gradleQueryDslOutput = file("${gradleGeneratedDir}")
+
+task cleanUpQueryDsl(type: Copy) {
+    from "${gradleGeneratedDir}/main"
+    into "${queryDslDir}"
+    doLast {
+        delete gradleQueryDslOutput
+    }
+}
+
+compileJava.finalizedBy(cleanUpQueryDsl)
+
+clean {
+    delete gradleQueryDslOutput
+    delete queryDslOutput
+}
