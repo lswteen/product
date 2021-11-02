@@ -18,7 +18,6 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode(of = "good_no")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,15 +25,19 @@ import javax.persistence.*;
 public class Goods extends BaseEntity{
     @Id
     @Column(name="goods_no")
+    @Comment("상품번호")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long goodsNo;
 
+    @Comment("상품명")
     @Column(name="goods_nm")
     private String goodsNm;
 
+    @Comment("상품설명")
     @Column(name="goods_cont")
     private String goodsCont;
 
+    @Comment("업체 아이디")
     @Column(name="com_id")
     private String comId;
 
