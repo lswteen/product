@@ -23,7 +23,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name="goods")
-public class Goods {
+public class Goods extends BaseEntity{
     @Id
     @Column(name="goods_no")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

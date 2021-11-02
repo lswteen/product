@@ -20,13 +20,13 @@ public class BaseEntity {
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT,
             timezone = TIME_ZONE)
-    @Column(name = "regdt", updatable = false)
-    private Date regdt;
+    @Column(name = "reg_dm", updatable = false)
+    private Date regDm;
 
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DATE_FORMAT,
             timezone = TIME_ZONE)
-    @Column(name = "moddt", updatable = true)
-    private Date moddt;
+    @Column(name = "mod_dm", updatable = true)
+    private Date modDm;
 }
