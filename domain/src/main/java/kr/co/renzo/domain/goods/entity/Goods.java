@@ -24,22 +24,22 @@ import javax.persistence.*;
 @Table(name="goods")
 public class Goods extends BaseEntity{
     @Id
-    @Column(name="goods_no")
+    @Column(name="goods_no", length = 11)
     @Comment("상품번호")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long goodsNo;
 
     @Comment("상품명")
-    @Column(name="goods_nm")
+    @Column(name="goods_nm", length = 100)
     private String goodsNm;
 
+    @Lob
     @Comment("상품설명")
     @Column(name="goods_cont")
     private String goodsCont;
 
     @Comment("업체 아이디")
-    @Column(name="com_id")
+    @Column(name="com_id", length = 20)
     private String comId;
-
 
 }
