@@ -25,6 +25,6 @@ public class GoodsAppService {
                         .goodsCont(item.getGoodsCont())
                         .comId(item.getComId())
                         .build())
-                .collect(Collectors.toList());
+                        .collect(Collectors.toList());
     }
 }
