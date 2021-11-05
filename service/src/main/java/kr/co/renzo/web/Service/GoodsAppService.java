@@ -20,11 +20,11 @@ public class GoodsAppService {
     public List<GoodsResponse> getAllByGoodsNo(List<Long> goodsNos ){
         List<Goods> goods = goodsService.getAllByGoodsNo(goodsNos);
         return goods.stream().map(item->GoodsResponse.builder()
-                        .goodsNo(item.getGoodsNo())
-                        .goodsNm(item.getGoodsNm())
-                        .goodsCont(item.getGoodsCont())
-                        .comId(item.getComId())
-                        .build())
-                        .collect(Collectors.toList());
+                    .goodsNo(item.getGoodsNo())
+                    .goodsNm(item.getGoodsNm())
+                    .goodsCont(item.getGoodsCont())
+                    .comId(item.getComId())
+                    .build())
+                    .collect(Collectors.toList());
     }
 }
