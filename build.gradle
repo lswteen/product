@@ -32,6 +32,8 @@ subprojects {
         implementation "org.apache.commons:commons-lang3:3.11"
         implementation 'javax.validation:validation-api:2.0.1.Final'
 
+        compile 'com.fasterxml.jackson.core:jackson-databind:2.11.4'
+
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
     }
 }
