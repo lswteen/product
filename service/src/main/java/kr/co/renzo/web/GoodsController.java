@@ -2,6 +2,7 @@ package kr.co.renzo.web;
 
 import io.swagger.annotations.Api;
 import kr.co.renzo.web.Service.GoodsAppService;
+import kr.co.renzo.web.request.GoodsRequest;
 import kr.co.renzo.web.response.GoodsConstants;
 import kr.co.renzo.web.response.GoodsResponse;
 import lombok.RequiredArgsConstructor;
@@ -26,14 +27,12 @@ public class GoodsController {
 
     @GetMapping("/goods")
     public List<GoodsResponse> getGoodsByNo(@RequestParam(required=true) List<Long> goodsNos){
-        return goodsAppService.getAllByGoodsNo(goodsNos);
+        return goodsAppService.getAllByGoods(goodsNos);
     }
 
     @PostMapping("/goods")
-    public ResponseEntity<Void> save(){
-        return GoodsConstants.CREATED;
+    public List<GoodsResponse> save(@RequestParam(required=true) List<GoodsRequest> goodsRequestList){
+        return goodsAppService.createGoods(goodsRequestList);
     }
-
-
 
 }

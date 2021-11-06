@@ -27,7 +27,7 @@ import java.util.List;
  * 배송방법
  * 상품재고
  *
- * 무신사 상품상세 에 노출되는것들
+ * 무신사 상품상세 에 노출되는것정
  * 구매후기,스타일후기,상품사진후기,일반후기
  * 좋아요수, 누적판매, 상품 조회수 등등등...
  *
@@ -64,6 +64,11 @@ public class Goods extends BaseEntity{
     @Column(name="seller_goods_name", length = 200)
     private String sellerGoodsName;
 
+    @Lob
+    @Comment("상품설명")
+    @Column(name="goods_cont")
+    private String goodsDetails;
+
     @Comment("업체 아이디")
     @Column(name="com_id")
     private Long vendorId;
@@ -76,35 +81,29 @@ public class Goods extends BaseEntity{
     @Column(name="sale_ended_at", length = 20)
     private String saleEndedAt;
 
-//    @Comment("상품 서비스에 노출될 상품명이며 브랜드, 제품명, 상품군 변경의해 자동변경될수 있습니다.")
-//    @Column(name="display_goods_name")
-//    private String displayGoodsName;
-//
-//    @Comment("브랜드명은 한글/영문 표준이름")
-//    @Column(name="brand")
-//    private String brand;
-//
-//    @Comment("배송방법 : SEQUENCIAL 일반(순차)배송, COLD_FRESH 신선냉동, MAKE_ORDER 주문제작, AGENT_BUY 구매대행, VENDOR_DIRECT 설치배송 또는 판매자 직접전달")
-//    @Column(name="delivery_method")
-//    private String deliveryMethod;
-//
-//    @Comment("배송비종류: FREE 무료배송, NOT_FREE : 유료배송, CHARGE_RECEIVED: 착불배송, CONDITIONAL_FREE: 조건부 무료배송")
-//    @Column(name="delivery_company_code")
-//    private String deliveryCompanyCode;
-//
-//    @Comment("기본배송비 : 유료배송 또는 조건부 무료배송시 편도 배송비 금액 입력")
-//    @Column(name="delivery_charge")
-//    private int deliveryCharge;
-//
-//    @Comment("반품지 센터 ID")
-//    @Column(name="return_center_id")
-//    private Long returnCenterId;
+    @Comment("상품 서비스에 노출될 상품명이며 브랜드, 제품명, 상품군 변경의해 자동변경될수 있습니다.")
+    @Column(name="display_goods_name")
+    private String displayGoodsName;
 
-    @Lob
-    @Comment("상품설명")
-    @Column(name="goods_cont")
-    private String goodsDetails;
+    @Comment("브랜드명은 한글/영문 표준이름")
+    @Column(name="brand")
+    private String brand;
 
+    @Comment("배송방법 : SEQUENCIAL 일반(순차)배송, COLD_FRESH 신선냉동, MAKE_ORDER 주문제작, AGENT_BUY 구매대행, VENDOR_DIRECT 설치배송 또는 판매자 직접전달")
+    @Column(name="delivery_method")
+    private String deliveryMethod;
+
+    @Comment("배송비종류: FREE 무료배송, NOT_FREE : 유료배송, CHARGE_RECEIVED: 착불배송, CONDITIONAL_FREE: 조건부 무료배송")
+    @Column(name="delivery_company_code")
+    private String deliveryCompanyCode;
+
+    @Comment("기본배송비 : 유료배송 또는 조건부 무료배송시 편도 배송비 금액 입력")
+    @Column(name="delivery_charge")
+    private int deliveryCharge;
+
+    @Comment("반품지 센터 ID")
+    @Column(name="return_center_id")
+    private Long returnCenterId;
 
 
 }
