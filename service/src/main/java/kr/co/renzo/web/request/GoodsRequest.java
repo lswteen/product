@@ -11,19 +11,19 @@ import java.util.Date;
 @Builder
 public class GoodsRequest {
 
-    private Long goodsNo;
+    private Long goodsId;
 
-    private String goodsNm;
+    private String sellerGoodsName;
 
-    private String goodsCont;
+    private String goodsDetails;
 
-    private String comId;
+    private Long vendorId;
 
     public Goods toEntity(){
         return Goods.builder()
-                .goodsNm(goodsNm)
-                .goodsCont(goodsCont)
-                .comId(comId)
+                .sellerGoodsName(sellerGoodsName)
+                .goodsDetails(goodsDetails)
+                .vendorId(vendorId)
                 .build();
     }
 

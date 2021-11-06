@@ -5,7 +5,7 @@ import kr.co.renzo.core.type.ServiceErrorType;
 import kr.co.renzo.domain.goods.entity.Goods;
 import kr.co.renzo.domain.goods.repository.GoodsRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
+
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -17,20 +17,18 @@ import java.util.List;
 public class GoodsService {
     private final GoodsRepository goodsRepository;
 
-    public Goods getByGoodsNo(Long goodsNo){
-        return goodsRepository.findByGoodsNo(goodsNo)
+    public Goods getByGoodsNo(Long goodsId){
+        return goodsRepository.findByGoodsId(goodsId)
                 .orElseThrow(()-> new ApiException(ServiceErrorType.NOT_FOUND));
     }
 
-    public List<Goods> getAllByGoodsNo(List<Long> goodsNos){
-        return goodsRepository.findAllByGoodsNoIn(goodsNos);
+    public List<Goods> getAllByGoodsId(List<Long> goodsIds){
+        return goodsRepository.findAllByGoodsIdIn(goodsIds);
     }
 
-    public List<Goods> getAllByComId(List<String> comIds){
-        return goodsRepository.getAllByComIdIn(comIds);
+    public List<Goods> getAllByVendorId(List<String> vendorIds){
+        return goodsRepository.getAllByVendorIdIn(vendorIds);
     }
-
-
 
     @Transactional(rollbackOn = RuntimeException.class)
     public Goods save(Goods goods){

@@ -5,17 +5,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import org.springframework.stereotype.Repository;
 
-
-
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface GoodsRepository extends JpaRepository<Goods, Long> {
-    Optional<Goods> findByGoodsNo(Long goodsNo);
+    Optional<Goods> findByGoodsId(Long goodsId);
 
-    List<Goods> findAllByGoodsNoIn(List<Long> goodsNos);
+    List<Goods> findAllByGoodsIdIn(List<Long> goodsNos);
 
-    List<Goods> getAllByComIdIn(List<String> comIds);
+    List<Goods> getAllByVendorIdIn(List<String> comIds);
 
 }

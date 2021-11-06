@@ -11,13 +11,13 @@ import java.time.LocalDate;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
 public class GoodsResponse {
-    private Long goodsNo;
+    private Long goodsId;
 
-    private String goodsNm;
+    private String sellerGoodsName;
 
-    private String goodsCont;
+    private String goodsDetails;
 
-    private String comId;
+    private Long vendorId;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate regDm;
