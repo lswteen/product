@@ -2,7 +2,6 @@ package kr.co.renzo.domain.goods.entity;
 
 import lombok.*;
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Getter
@@ -17,6 +16,10 @@ public class GoodsItem {
     @Comment("옵션 ID")
     @Column(name="seller_goods_item_id")
     private long sellerGoodsItemId;
+
+    @Column(name="goods_no")
+    @Comment("상품 ID")
+    private Long goodsId;
 
     @Comment("옵션 명")
     @Column(name="item_name")
