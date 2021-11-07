@@ -3,6 +3,7 @@ package kr.co.renzo.domain.goods.service;
 import kr.co.renzo.core.exception.ApiException;
 import kr.co.renzo.core.type.ServiceErrorType;
 import kr.co.renzo.domain.goods.entity.Goods;
+import kr.co.renzo.domain.goods.entity.GoodsItem;
 import kr.co.renzo.domain.goods.repository.GoodsRepository;
 import lombok.RequiredArgsConstructor;
 

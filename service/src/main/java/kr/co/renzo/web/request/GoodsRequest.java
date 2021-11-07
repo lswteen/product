@@ -10,8 +10,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@Builder
 public class GoodsRequest {
 
     private Long goodsId;               //상품ID
@@ -40,6 +38,25 @@ public class GoodsRequest {
 
     private List<GoodsItem> goodsItemList;
 
+    @Builder
+    public GoodsRequest(Long vendorId, String sellerGoodsName, String displayGoodsName
+            , String brand, String deliveryMethod, String deliveryCompanyCode
+            , int deliveryCharge, Long returnCenterId, String goodsDetails
+            , String saleStartedAt, String saleEndedAt, List<GoodsItem> goodsItemList) {
+        this.vendorId = vendorId;
+        this.sellerGoodsName = sellerGoodsName;
+        this.displayGoodsName = displayGoodsName;
+        this.brand = brand;
+        this.deliveryMethod = deliveryMethod;
+        this.deliveryCompanyCode = deliveryCompanyCode;
+        this.deliveryCharge = deliveryCharge;
+        this.returnCenterId = returnCenterId;
+        this.goodsDetails = goodsDetails;
+        this.saleStartedAt = saleStartedAt;
+        this.saleEndedAt = saleEndedAt;
+        this.goodsItemList = goodsItemList;
+    }
+
     public Goods toEntity(){
         return Goods.builder()
                 .vendorId(vendorId)
@@ -53,7 +70,6 @@ public class GoodsRequest {
                 .goodsDetails(goodsDetails)
                 .saleStartedAt(saleStartedAt)
                 .saleEndedAt(saleEndedAt)
-                .goodsItemList(goodsItemList)
                 .build();
     }
 
