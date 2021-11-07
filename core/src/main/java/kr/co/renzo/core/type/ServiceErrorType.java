@@ -10,6 +10,7 @@ public enum ServiceErrorType {
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, 1, "시스템에 문제가 발생하였습니다."),
     INVALID_PARAMETER(HttpStatus.CONFLICT, 1, "유효하지 않은 전달값입니다."),
 
+    GOODS_FAILES(HttpStatus.NOT_FOUND,1,"상품등록이 정상적이지 않습니다.")
     ;
 
     HttpStatus httpStatus;

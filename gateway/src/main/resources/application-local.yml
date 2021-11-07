@@ -1,0 +1,30 @@
+server:
+  port: 9000
+spring:
+  cloud:
+    gateway:
+      default-filters:
+        - name: GlobalFilter
+          args:
+            baseMessage: Spring Cloud Gateway Global Filter
+            preLogger: true
+            postLogger: true
+      routes:
+        - id: service-api
+          uri: http://127.0.0.1:9030
+          predicates:
+            - Path=/api/**
+          filters:
+            - AuthorizationHeaderFilter
+            - name: CustomFilter
+            - name: LoggingFilter
+              args:
+                baseMessage: ===> Product service API
+                preLogger: true
+                postLogger: true
+
+        - id: cre
+          uri: https://stg-apps.greencar.co.kr/
+          predicates:
+            - Path=/**
+

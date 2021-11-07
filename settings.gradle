@@ -2,4 +2,5 @@ rootProject.name = 'product'
 include 'core'
 include 'domain'
 include 'service'
+include 'gateway'
 
