@@ -26,7 +26,7 @@ public class GoodsAppService {
         return new GoodsResponse();
     }
 
-    @Transactional
+
     public List<GoodsResponse> getAllByGoods(List<Long> goodsNos ){
 
         List<GoodsResponse> goodsResponseList= new ArrayList<>();
@@ -63,6 +63,7 @@ public class GoodsAppService {
      * @param goodsRequestList
      * @return
      */
+    @Transactional
     public List<GoodsResponse> createGoods(List<GoodsRequest> goodsRequestList){
         List<GoodsResponse> goodsResponseList= new ArrayList<>();
         goodsRequestList.forEach(goodsRequest->{
