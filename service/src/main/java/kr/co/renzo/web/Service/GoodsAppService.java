@@ -1,10 +1,6 @@
 package kr.co.renzo.web.Service;
 
-import kr.co.renzo.core.exception.ApiException;
-import kr.co.renzo.core.type.ServiceErrorType;
 import kr.co.renzo.domain.goods.entity.Goods;
-import kr.co.renzo.domain.goods.entity.GoodsItem;
-import kr.co.renzo.domain.goods.service.GoodsItemService;
 import kr.co.renzo.domain.goods.service.GoodsService;
 import kr.co.renzo.web.request.GoodsRequest;
 import kr.co.renzo.web.response.GoodsResponse;
@@ -12,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,22 +20,24 @@ public class GoodsAppService {
 
     private final GoodsService goodsService;
 
-    private final GoodsItemService goodsItemService;
+
 
     private GoodsResponse newInstanceGoodsResponse() {
         return new GoodsResponse();
     }
 
+    @Transactional
     public List<GoodsResponse> getAllByGoods(List<Long> goodsNos ){
-        GoodsResponse goodsResponse = newInstanceGoodsResponse();
 
+        List<GoodsResponse> goodsResponseList= new ArrayList<>();
         List<Goods> resultGoods = goodsService.getAllByGoodsId(goodsNos);
-        resultGoods.forEach(goods -> {
-           goods.setGoodsItemList(goodsItemService.getAllByGoodsId(goods.getGoodsId()));
+
+        resultGoods.forEach(goods->{
+            GoodsResponse goodsResponse = newInstanceGoodsResponse();
+            goodsResponseList.add(goodsResponse.toObject(goods));
         });
 
-        return resultGoods.stream().map(item-> goodsResponse.toObject(item))
-                    .collect(Collectors.toList());
+        return goodsResponseList;
     }
 
     /**
@@ -66,15 +65,13 @@ public class GoodsAppService {
      */
     public List<GoodsResponse> createGoods(List<GoodsRequest> goodsRequestList){
         List<GoodsResponse> goodsResponseList= new ArrayList<>();
-        goodsRequestList.forEach(goods->{
-            Goods resultGoods = goodsService.save(goods.toEntity());
-            if(null == resultGoods.getGoodsId()){
-                throw new ApiException(ServiceErrorType.GOODS_FAILES);
-            }
-
-            goods.getGoodsItemList().forEach(goodsItem -> goodsItem.setGoodsId(resultGoods.getGoodsId()));
-            List<GoodsItem> resultGoodsItem = goodsItemService.saveAll(goods.getGoodsItemList());
-            resultGoods.setGoodsItemList(resultGoodsItem);
+        goodsRequestList.forEach(goodsRequest->{
+            Goods goods = goodsRequest.toEntity();
+            goodsRequest.getGoodsItemList().stream().map(goodsItem -> {
+                goodsItem.setGoods(goods);
+                return goodsItem;
+            }).collect(Collectors.toList());
+            Goods resultGoods = goodsService.save(goods);
 
             GoodsResponse response = newInstanceGoodsResponse();
             goodsResponseList.add(response.toObject(resultGoods));

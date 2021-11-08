@@ -6,9 +6,6 @@ buildscript {
         dependencies {
             classpath "gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:${querydslPluginVersion}"
             classpath('net.ltgt.gradle:gradle-apt-plugin:0.19')
-
-
-
         }
     }
 }
