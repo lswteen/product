@@ -16,7 +16,7 @@ import java.util.Set;
 
 @Configuration
 @EnableSwagger2
-public class SaggerConfig {
+public class SwaggerConfig {
     private String version;
     private String title;
 

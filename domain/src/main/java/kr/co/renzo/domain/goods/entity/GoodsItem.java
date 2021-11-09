@@ -1,5 +1,6 @@
 package kr.co.renzo.domain.goods.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import javax.persistence.*;
 
@@ -15,11 +16,11 @@ public class GoodsItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Comment("옵션 ID")
     @Column(name="seller_goods_item_id")
-    private long sellerGoodsItemId;
+    private Long sellerGoodsItemId;
 
-    @Column(name="goods_no")
-    @Comment("상품 ID")
-    private Long goodsId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="goods_no", nullable = false)
+    private Goods goods;
 
     @Comment("옵션 명")
     @Column(name="item_name")

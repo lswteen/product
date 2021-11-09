@@ -4,19 +4,26 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import kr.co.renzo.domain.goods.entity.Goods;
 import kr.co.renzo.domain.goods.entity.GoodsItem;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class GoodsResponse {
     private Long goodsId;
 
-    private List<GoodsItem> goodsItemList;
+    @Builder.Default
+    private List<GoodsItem> goodsItemList = new ArrayList<>();
 
     private String statusName;
 
@@ -49,35 +56,6 @@ public class GoodsResponse {
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate modDm;
-
-    @Builder
-    public GoodsResponse(Long goodsId, List<GoodsItem> goodsItemList, String statusName
-            , Long displayCategoryId, String sellerGoodsName, String goodsDetails
-            , Long vendorId, String saleStartedAt, String saleEndedAt
-            , String displayGoodsName, String brand, String deliveryMethod
-            , String deliveryCompanyCode, int deliveryCharge, Long returnCenterId
-            , LocalDate regDm, LocalDate modDm) {
-        this.goodsId = goodsId;
-        this.goodsItemList = goodsItemList;
-        this.statusName = statusName;
-        this.displayCategoryId = displayCategoryId;
-        this.sellerGoodsName = sellerGoodsName;
-        this.goodsDetails = goodsDetails;
-        this.vendorId = vendorId;
-        this.saleStartedAt = saleStartedAt;
-        this.saleEndedAt = saleEndedAt;
-        this.displayGoodsName = displayGoodsName;
-        this.brand = brand;
-        this.deliveryMethod = deliveryMethod;
-        this.deliveryCompanyCode = deliveryCompanyCode;
-        this.deliveryCharge = deliveryCharge;
-        this.returnCenterId = returnCenterId;
-        this.regDm = regDm;
-        this.modDm = modDm;
-    }
-
-    public GoodsResponse() {
-    }
 
     public GoodsResponse toObject(Goods goods){
         return GoodsResponse.builder()

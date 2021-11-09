@@ -1,8 +1,11 @@
 package kr.co.renzo.domain.goods.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,7 +41,6 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@DiscriminatorColumn(name = "dtype")
 @Table(name="goods")
 public class Goods extends BaseEntity{
 
@@ -48,9 +50,10 @@ public class Goods extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long goodsId;
 
-    @OneToMany
-    @JoinColumn(name="goods_no")
-    private List<GoodsItem> goodsItemList;
+    @JsonIgnore
+    @OneToMany(mappedBy = "goods", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Builder.Default
+    private List<GoodsItem> goodsItemList= new ArrayList<>();
 
     @Comment("등록 상품 상태")
     @Column(name="status_name")

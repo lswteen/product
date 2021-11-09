@@ -1,12 +1,12 @@
 package kr.co.renzo.web.request;
 
 import kr.co.renzo.domain.goods.entity.GoodsItem;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
-@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class GoodsItemRequest {
     private long sellerGoodsItemId;
     private String itemName;                //업체 상품 옵션명
@@ -17,16 +17,6 @@ public class GoodsItemRequest {
     private String taxType;                 //TAX, FREE
     private String modelNo;                 //모델 번호
 
-    @Builder
-    public GoodsItemRequest(String itemName, int originalPrice, int salePrice, int maximumBuyForPerson, String adultOnly, String taxType, String modelNo) {
-        this.itemName = itemName;
-        this.originalPrice = originalPrice;
-        this.salePrice = salePrice;
-        this.maximumBuyForPerson = maximumBuyForPerson;
-        this.adultOnly = adultOnly;
-        this.taxType = taxType;
-        this.modelNo = modelNo;
-    }
 
     public GoodsItem toEntity(){
         return GoodsItem.builder()

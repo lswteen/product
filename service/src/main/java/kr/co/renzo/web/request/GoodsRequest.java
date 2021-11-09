@@ -5,11 +5,14 @@ import kr.co.renzo.domain.goods.entity.GoodsItem;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Getter
-@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class GoodsRequest {
 
     private Long goodsId;               //상품ID
@@ -36,26 +39,9 @@ public class GoodsRequest {
 
     private String saleEndedAt;         //판매 종료일
 
-    private List<GoodsItem> goodsItemList;
+    @Builder.Default
+    private List<GoodsItem> goodsItemList = new ArrayList<>();
 
-    @Builder
-    public GoodsRequest(Long vendorId, String sellerGoodsName, String displayGoodsName
-            , String brand, String deliveryMethod, String deliveryCompanyCode
-            , int deliveryCharge, Long returnCenterId, String goodsDetails
-            , String saleStartedAt, String saleEndedAt, List<GoodsItem> goodsItemList) {
-        this.vendorId = vendorId;
-        this.sellerGoodsName = sellerGoodsName;
-        this.displayGoodsName = displayGoodsName;
-        this.brand = brand;
-        this.deliveryMethod = deliveryMethod;
-        this.deliveryCompanyCode = deliveryCompanyCode;
-        this.deliveryCharge = deliveryCharge;
-        this.returnCenterId = returnCenterId;
-        this.goodsDetails = goodsDetails;
-        this.saleStartedAt = saleStartedAt;
-        this.saleEndedAt = saleEndedAt;
-        this.goodsItemList = goodsItemList;
-    }
 
     public Goods toEntity(){
         return Goods.builder()
@@ -70,6 +56,7 @@ public class GoodsRequest {
                 .goodsDetails(goodsDetails)
                 .saleStartedAt(saleStartedAt)
                 .saleEndedAt(saleEndedAt)
+                .goodsItemList(goodsItemList)
                 .build();
     }
 

@@ -7,8 +7,8 @@ import kr.co.renzo.domain.goods.repository.GoodsRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 
 import java.util.List;
 
@@ -22,6 +22,7 @@ public class GoodsService {
                 .orElseThrow(()-> new ApiException(ServiceErrorType.NOT_FOUND));
     }
 
+    @Transactional(readOnly = true)
     public List<Goods> getAllByGoodsId(List<Long> goodsIds){
         return goodsRepository.findAllByGoodsIdIn(goodsIds);
     }
@@ -30,8 +31,9 @@ public class GoodsService {
         return goodsRepository.getAllByVendorIdIn(vendorIds);
     }
 
-    @Transactional(rollbackOn = RuntimeException.class)
+
+    @Transactional
     public Goods save(Goods goods){
-        return goodsRepository.save(goods);
+        return goodsRepository.saveAndFlush(goods);
     }
 }
