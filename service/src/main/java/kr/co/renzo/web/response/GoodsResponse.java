@@ -1,6 +1,7 @@
 package kr.co.renzo.web.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import kr.co.renzo.domain.goods.entity.Goods;
 import kr.co.renzo.domain.goods.entity.GoodsItem;
@@ -21,9 +22,6 @@ import java.util.List;
 @NoArgsConstructor
 public class GoodsResponse {
     private Long goodsId;
-
-    @Builder.Default
-    private List<GoodsItem> goodsItemList = new ArrayList<>();
 
     private String statusName;
 
@@ -51,30 +49,14 @@ public class GoodsResponse {
 
     private Long returnCenterId;
 
+    private List<GoodsItem> goodsItems;
+
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate regDm;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate modDm;
 
-    public GoodsResponse toObject(Goods goods){
-        return GoodsResponse.builder()
-                .goodsId(goods.getGoodsId())
-                .goodsItemList(goods.getGoodsItemList())
-                .statusName(goods.getStatusName())
-                .displayCategoryId(goods.getDisplayCategoryId())
-                .sellerGoodsName(goods.getSellerGoodsName())
-                .goodsDetails(goods.getGoodsDetails())
-                .vendorId(goods.getVendorId())
-                .saleStartedAt(goods.getSaleStartedAt())
-                .saleEndedAt(goods.getSaleEndedAt())
-                .displayGoodsName(goods.getDisplayGoodsName())
-                .brand(goods.getBrand())
-                .deliveryMethod(goods.getDeliveryMethod())
-                .deliveryCompanyCode(goods.getDeliveryCompanyCode())
-                .deliveryCharge(goods.getDeliveryCharge())
-                .returnCenterId(goods.getReturnCenterId())
-                .build();
-    }
+
 
 }

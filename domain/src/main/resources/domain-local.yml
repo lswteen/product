@@ -1,7 +1,7 @@
 spring:
   datasource:
     driverClassName: org.h2.Driver
-    jdbcUrl: jdbc:h2:file:~/h2db/test;MODE=MySql
+    jdbcUrl: jdbc:h2:~/musin
     username: sa
     password:
     maximumPoolSize: 30
