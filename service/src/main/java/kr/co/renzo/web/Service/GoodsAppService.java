@@ -3,6 +3,7 @@ package kr.co.renzo.web.Service;
 import kr.co.renzo.domain.goods.entity.Goods;
 import kr.co.renzo.domain.goods.service.GoodsService;
 import kr.co.renzo.web.request.GoodsRequest;
+import kr.co.renzo.web.response.GoodsItemResponse;
 import kr.co.renzo.web.response.GoodsResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,13 +21,12 @@ public class GoodsAppService {
 
     private final GoodsService goodsService;
 
-
-
     private GoodsResponse newInstanceGoodsResponse() {
         return new GoodsResponse();
     }
 
 
+    @Transactional
     public List<GoodsResponse> getAllByGoods(List<Long> goodsNos ){
 
         List<GoodsResponse> goodsResponseList= new ArrayList<>();
@@ -34,11 +34,30 @@ public class GoodsAppService {
 
         resultGoods.forEach(goods->{
             GoodsResponse goodsResponse = newInstanceGoodsResponse();
-            goodsResponseList.add(goodsResponse.toObject(goods));
+            goodsResponseList.add(
+                GoodsResponse.builder()
+                    .goodsId(goods.getGoodsId())
+                    .statusName(goods.getStatusName())
+                    .displayCategoryId(goods.getDisplayCategoryId())
+                    .sellerGoodsName(goods.getSellerGoodsName())
+                    .goodsDetails(goods.getGoodsDetails())
+                    .vendorId(goods.getVendorId())
+                    .saleStartedAt(goods.getSaleStartedAt())
+                    .saleEndedAt(goods.getSaleEndedAt())
+                    .displayGoodsName(goods.getDisplayGoodsName())
+                    .brand(goods.getBrand())
+                    .deliveryMethod(goods.getDeliveryMethod())
+                    .deliveryCompanyCode(goods.getDeliveryCompanyCode())
+                    .deliveryCharge(goods.getDeliveryCharge())
+                    .returnCenterId(goods.getReturnCenterId())
+                    .build()
+            );
         });
 
         return goodsResponseList;
     }
+
+
 
     /**
      * 상품 등록시 valied 정책을 기반으로 체크 하면서 등록이 되어야합니다.
@@ -75,7 +94,25 @@ public class GoodsAppService {
             Goods resultGoods = goodsService.save(goods);
 
             GoodsResponse response = newInstanceGoodsResponse();
-            goodsResponseList.add(response.toObject(resultGoods));
+            goodsResponseList.add(
+                GoodsResponse.builder()
+                    .goodsId(resultGoods.getGoodsId())
+                    .goodsItems(resultGoods.getGoodsItemList())
+                    .statusName(resultGoods.getStatusName())
+                    .displayCategoryId(resultGoods.getDisplayCategoryId())
+                    .sellerGoodsName(resultGoods.getSellerGoodsName())
+                    .goodsDetails(resultGoods.getGoodsDetails())
+                    .vendorId(resultGoods.getVendorId())
+                    .saleStartedAt(resultGoods.getSaleStartedAt())
+                    .saleEndedAt(resultGoods.getSaleEndedAt())
+                    .displayGoodsName(resultGoods.getDisplayGoodsName())
+                    .brand(resultGoods.getBrand())
+                    .deliveryMethod(resultGoods.getDeliveryMethod())
+                    .deliveryCompanyCode(resultGoods.getDeliveryCompanyCode())
+                    .deliveryCharge(resultGoods.getDeliveryCharge())
+                    .returnCenterId(resultGoods.getReturnCenterId())
+                    .build()
+            );
         });
         return goodsResponseList;
     }
