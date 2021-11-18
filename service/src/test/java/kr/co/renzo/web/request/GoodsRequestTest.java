@@ -1,0 +1,7 @@
+package kr.co.renzo.web.request;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class GoodsRequestTest {
+
+}
