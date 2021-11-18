@@ -23,8 +23,3 @@ spring:
                 preLogger: true
                 postLogger: true
 
-        - id: cre
-          uri: https://stg-apps.greencar.co.kr/
-          predicates:
-            - Path=/**
-
